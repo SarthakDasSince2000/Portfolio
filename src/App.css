@@ -237,18 +237,8 @@ html[data-theme=dark] .theme-toggle, html[data-theme=dark] .menu-button {
    ================================================== */
 .hero {
   position: relative;
-  min-height: 790px;
-  padding-top: 155px;
-}
-
-.hero-grid-bg {
-  position: absolute;
-  inset: 0;
-  opacity: 0.65;
-  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, #0009, transparent 67%);
-  pointer-events: none;
+  min-height: 740px;
+  padding-top: 106px;
 }
 
 .hero-top-cluster {
@@ -1249,6 +1239,78 @@ h3 {
 }
 
 /* ===================================================
+   SKILLS HORIZONTAL SECTION
+   =================================================== */
+.skills-horizontal-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.skills-legacy-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.skills-section-content {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.skills-track-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 24px 0 32px;
+}
+
+.skills-track {
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  width: max-content;
+  will-change: transform;
+}
+
+.skills-track .service-card {
+  flex: 0 0 clamp(350px, 28vw, 400px);
+  width: clamp(350px, 28vw, 400px);
+  max-width: 400px;
+  height: 290px;
+  min-height: 290px;
+  padding: 26px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills-track .service-card h3 {
+  font-size: 22px;
+  margin: 54px 0 10px;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.skills-track .service-card p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 290px;
+  margin: 0;
+}
+
+/* ===================================================
    PROJECTS
    =================================================== */
 .project-grid {
@@ -1670,6 +1732,30 @@ footer a {
     transform: none;
     filter: none;
   }
+  .skills-horizontal-section {
+    min-height: auto !important;
+    height: auto !important;
+  }
+  .skills-track-wrapper {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .skills-track {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+  }
+  .skills-track .service-card {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 270px !important;
+  }
 }
 
 @media (max-width: 850px) {
@@ -1708,8 +1794,8 @@ footer a {
     bottom: -4px;
   }
   .hero {
-    min-height: 740px;
-    padding-top: 120px;
+    min-height: 700px;
+    padding-top: 92px;
   }
   .hero-layout, .section-heading, .about-layout, .contact-content {
     grid-template-columns: 1fr;
@@ -1754,6 +1840,35 @@ footer a {
   }
   .skill-groups, .service-grid, .project-grid {
     grid-template-columns: 1fr;
+  }
+  .skills-horizontal-section {
+    min-height: auto;
+    height: auto;
+    padding: 95px 25px;
+    overflow: visible;
+  }
+  .skills-section-content {
+    margin-bottom: 25px;
+  }
+  .skills-track-wrapper {
+    overflow: visible;
+    padding: 0;
+  }
+  .skills-track {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    transform: none !important;
+  }
+  .skills-track .service-card {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 270px;
   }
   .skill-groups {
     gap: 30px;

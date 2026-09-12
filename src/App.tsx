@@ -6,7 +6,8 @@ import { Reveal } from './components/Reveal'
 import { SectionHeading } from './components/SectionHeading'
 import { AiAvatar } from './components/AiAvatar'
 import { AiAssistantModal } from './components/AiAssistantModal'
-import { experience, expertise, profile, projects, services, skillGroups, stats } from './data/portfolio'
+import { SkillsHorizontalSection } from './components/SkillsHorizontalSection'
+import { experience, expertise, profile, projects, skillGroups, stats } from './data/portfolio'
 import './App.css'
 import './motion.css'
 import './theme-motion.css'
@@ -46,7 +47,7 @@ function App() {
       setIsScrolled(currentScrollY > 20)
 
       // Section tracking
-      const sectionIds = ['contact', 'process', 'expertise', 'projects', 'services', 'skills', 'experience', 'about', 'home']
+      const sectionIds = ['contact', 'process', 'expertise', 'projects', 'services', 'skills', 'toolkit', 'experience', 'about', 'home']
       const activeEl = sectionIds.find(id => {
         const el = document.getElementById(id)
         if (!el) return false
@@ -55,10 +56,11 @@ function App() {
       })
 
       if (activeEl) {
-        setActive(activeEl)
+        setActive(activeEl === 'toolkit' || activeEl === 'services' ? 'skills' : activeEl)
       } else {
         const fallback = [...document.querySelectorAll<HTMLElement>('section[id]')].findLast(item => item.offsetTop - 140 <= currentScrollY)
-        setActive(fallback?.id ?? '')
+        const fallbackId = fallback?.id ?? ''
+        setActive(fallbackId === 'toolkit' || fallbackId === 'services' ? 'skills' : fallbackId)
       }
     }
 
@@ -72,7 +74,12 @@ function App() {
     setMenuOpen(false)
     const target = document.getElementById(id)
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' })
+      const pinSpacer = target.closest('.pin-spacer') as HTMLElement | null
+      if (pinSpacer) {
+        window.scrollTo({ top: pinSpacer.offsetTop, behavior: 'smooth' })
+      } else {
+        target.scrollIntoView({ behavior: 'smooth' })
+      }
     }
   }
 
@@ -83,7 +90,6 @@ function App() {
 
     <main>
       <section id="home" className="hero section">
-        <div className="hero-grid-bg" />
         <Reveal className="hero-availability">
           <div className="availability"><span /> Available for opportunities</div>
         </Reveal>
@@ -117,9 +123,9 @@ function App() {
 
       <section id="experience" className="section experience"><SectionHeading eyebrow="02 — Experience" title={<>Professional context,<br /><em>ready for your story.</em></>} copy="Replace the structured placeholders below with your verified experience." /><Reveal className="timeline"><div>{experience.map((item, index) => <Reveal className="timeline-item" delay={index * 100} key={`${item.company}-${item.period}`}><div className="timeline-dot" /><p className="timeline-period">{item.period}</p><div><h3>{item.role}</h3><h4>{item.company}</h4><p>{item.summary}</p><div className="tags">{item.technologies.map(tech => <span key={tech}>{tech}</span>)}</div></div></Reveal>)}</div></Reveal></section>
 
-      <section id="skills" className="section skills"><SectionHeading eyebrow="03 — Toolkit" title={<>A practical toolkit for<br /><em>modern product work.</em></>} /><div className="skill-groups">{skillGroups.map(([group, skills], index) => <Reveal className="skill-group" delay={index * 90} key={group}><h3>{group}</h3><div>{skills.map(skill => <span key={skill}><Check size={14} /> {skill}</span>)}</div></Reveal>)}</div></section>
+      <section id="toolkit" className="section skills"><SectionHeading eyebrow="03 — Toolkit" title={<>A practical toolkit for<br /><em>modern product work.</em></>} /><div className="skill-groups">{skillGroups.map(([group, skills], index) => <Reveal className="skill-group" delay={index * 90} key={group}><h3>{group}</h3><div>{skills.map(skill => <span key={skill}><Check size={14} /> {skill}</span>)}</div></Reveal>)}</div></section>
 
-      <section className="section services"><SectionHeading eyebrow="04 — What I do" title={<>From interface to<br /><em>implementation.</em></>} /><div className="service-grid">{services.map(({ title, description, icon: Icon }, index) => <Reveal className="service-reveal" delay={index * 85} key={title}><article className="service-card"><Icon /><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p><ArrowUpRight className="service-arrow" size={20} /></article></Reveal>)}</div></section>
+      <SkillsHorizontalSection />
 
       <section id="projects" className="section projects"><SectionHeading eyebrow="05 — Selected projects" title={<>Project work, structured<br /><em>for a closer look.</em></>} copy="Each card is intentionally configured as a placeholder for your real case studies." /><div className="project-grid">{projects.map((project, index) => <Reveal className="project-reveal" delay={index * 90} key={project.title}><article className="project-card"><div className={`project-visual visual--${project.accent}`}><div className="visual-window"><i /><i /><i /><div /></div><span>{`0${index + 1}`}</span></div><div className="project-body"><div><p>{project.technologies.join(' · ')}</p><h3>{project.title}</h3></div><p>{project.description}</p><details><summary>Project details <ArrowDownRight size={16} /></summary><p><b>Problem:</b> {project.problem}</p><div className="tags">{project.technologies.map(tech => <span key={tech}>{tech}</span>)}</div></details></div></article></Reveal>)}</div></section>
 
